@@ -62,6 +62,7 @@ from app.api.order_statistics.tickets import OrderStatisticsTicketDetail
 from app.api.faq_types import FaqTypeList, FaqTypeListPost, FaqTypeDetail, FaqTypeRelationshipOptional, \
     FaqTypeRelationshipRequired
 from app.api.admin_sales.invoices import AdminSalesInvoicesList
+from app.api.admin.permissions import AdminPermissionsList
 
 # users
 api.route(UserList, 'user_list', '/users')
@@ -508,3 +509,5 @@ api.route(AdminStatisticsMailDetail, 'admin_statistics_mail_detail', '/admin/sta
 
 # Admin Sales
 api.route(AdminSalesInvoicesList, 'admin_sales_invoices', '/admin/sales/invoices')
+
+api.route(AdminPermissionsList, 'admin_permissions', '/admin/permissions')
