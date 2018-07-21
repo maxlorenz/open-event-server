@@ -4,9 +4,8 @@ python for any kind of operation here, Objects requiring flask app context may
 not work properly
 
 """
-
+import app.models.search.sync as search
 from app.models.event import Event
-from app.models.search.sync import rebuild_indices, sync_event_from_database
 from app.views.celery_ import celery
 from app.views.elastic_search import connect_from_config
 from app.views.postgres import get_session_from_config
@@ -17,13 +16,12 @@ def cron_rebuild_events_elasticsearch():
     "Re-inserts all eligible events into elasticsearch, deletes existing events"
     elastic = connect_from_config()
     session = get_session_from_config()
-    rebuild_indices(client=elastic)
+    search.rebuild_indices(client=elastic)
 
     for event in session.query(Event).filter_by(state='published'):
-        sync_event_from_database(event)
+        search.sync_event_from_database(event)
 
 
 def sync_events_elasticsearch():
     "Sync all newly created, updated or deleted events"
-    elastic = connect_from_config()
-    elastic.sync()
+    search.sync()
